@@ -52,7 +52,8 @@ public class PreviewOverviewController {
 	}
 	
 	/**
-	 * loadFile opens the Window's file explorer.
+	 * loadFile opens the dialog box and loads a
+	 * file.
 	 */
 	public void loadFile() {
 		FileChooser fileSelector = new FileChooser();
@@ -64,6 +65,11 @@ public class PreviewOverviewController {
 		this.previewArea.setText(inputFile.toString());
 	}
 	
+	/**
+	 * configureFileChooserLoad sets the properties of the load
+	 * dialog box.
+	 * @param fileSelector
+	 */
 	private void configureFileChooserLoad(FileChooser fileSelector) {
 		// set dialog box properties
 		fileSelector.setTitle("File to Process");
@@ -73,6 +79,10 @@ public class PreviewOverviewController {
 		fileSelector.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
 	}
 	
+	/**
+	 * saveFile opens the dialog box and sets the file to
+	 * write to.
+	 */
 	public void saveFile() {
 		FileChooser fileSelector = new FileChooser();
 		
@@ -96,11 +106,24 @@ public class PreviewOverviewController {
 		}
 	}
 	
+	/**
+	 * configureFileChooserSave sets the properties of the save
+	 * dialog box.
+	 * @param fileSelector
+	 */
 	private void configureFileChooserSave(FileChooser fileSelector) {
 		// set dialog box properties
 		fileSelector.setTitle("File to Save");
 		fileSelector.setInitialDirectory(new File(System.getProperty("user.home")));
 		
 		fileSelector.getExtensionFilters().add(new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+	}
+	
+	/**
+	 * exitApplication exits the program and closes
+	 * all files if necessary.
+	 */
+	public void exitApplication() {
+		primaryStage.close();
 	}
 }

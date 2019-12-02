@@ -1,0 +1,6 @@
+[23:09:53]: File not loaded.
+[23:09:56]: (Error #1) File not loaded.
+[23:10:01]: File not saved.
+[23:10:08]: File loaded.
+[23:10:09]: File processed.
+[23:10:15]: File saved.

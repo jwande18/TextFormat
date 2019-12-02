@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -16,8 +17,11 @@
                      <children>
                         <Label alignment="CENTER" prefWidth="450.0" text="Preview" />
                         <TextArea fx:id="previewArea" prefHeight="350.0" prefWidth="450.0" promptText="Text Format Result..." />
-                        <Label alignment="CENTER" prefWidth="450.0" text="Error Log" />
-                        <TextArea fx:id="errorArea" prefHeight="200.0" prefWidth="200.0" promptText="Error Report History..." />
+                        <Label alignment="CENTER" prefWidth="450.0" text="Status &amp; Error Log" />
+                        <TextArea fx:id="statusArea" prefHeight="200.0" prefWidth="200.0" promptText="Error Report History...">
+                           <font>
+                              <Font name="Courier New" size="12.0" />
+                           </font></TextArea>
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -29,15 +33,10 @@
                <children>
                   <VBox prefHeight="480.0" prefWidth="190.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
+                        <Label alignment="CENTER" prefWidth="180.0" text="Controls" />
                         <Button mnemonicParsing="false" onAction="#loadFile" prefWidth="180.0" text="Load" />
                         <Button mnemonicParsing="false" onAction="#saveFile" prefWidth="180.0" text="Save" />
-                        <Button mnemonicParsing="false" prefWidth="180.0" text="Preview" />
-                        <Label alignment="CENTER" prefWidth="180.0" text="Status">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </Label>
-                        <TextField fx:id="statusField" />
+                        <Button mnemonicParsing="false" onAction="#processFile" prefWidth="180.0" text="Preview" />
                         <AnchorPane prefHeight="404.0" prefWidth="180.0">
                            <children>
                               <Button mnemonicParsing="false" onAction="#exitApplication" prefWidth="180.0" text="Exit" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />

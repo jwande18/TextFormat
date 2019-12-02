@@ -9,6 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
+// classes
+import application.text.view.PreviewOverviewController;
+
 public class MainApp extends Application {
 	private Stage primaryStage;
 	private BorderPane rootLayout;
@@ -63,6 +66,11 @@ public class MainApp extends Application {
 			
 			// set the preview overview to the center of the root layout
 			rootLayout.setCenter(previewOverview);
+			
+			// give the controller access to the main app
+			PreviewOverviewController controller = loader.getController();
+			controller.setMainApp(this);
+			
 		} catch(IOException exception) {
 			exception.printStackTrace();
 		}

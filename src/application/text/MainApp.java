@@ -69,7 +69,7 @@ public class MainApp extends Application {
 			
 			// give the controller access to the main app
 			PreviewOverviewController controller = loader.getController();
-			controller.setMainApp(this);
+			controller.setMainApp(this, primaryStage);
 			
 		} catch(IOException exception) {
 			exception.printStackTrace();

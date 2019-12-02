@@ -29,8 +29,8 @@
                <children>
                   <VBox prefHeight="480.0" prefWidth="190.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Button mnemonicParsing="false" prefWidth="180.0" text="Load" />
-                        <Button mnemonicParsing="false" prefWidth="180.0" text="Save" />
+                        <Button mnemonicParsing="false" onAction="#loadFile" prefWidth="180.0" text="Load" />
+                        <Button mnemonicParsing="false" onAction="#saveFile" prefWidth="180.0" text="Save" />
                         <Button mnemonicParsing="false" prefWidth="180.0" text="Preview" />
                         <AnchorPane prefHeight="404.0" prefWidth="180.0">
                            <children>

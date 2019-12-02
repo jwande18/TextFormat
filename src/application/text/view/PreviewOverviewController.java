@@ -3,6 +3,7 @@ package application.text.view;
 // import(s)
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.*;
 
 import java.io.BufferedWriter;
@@ -19,6 +20,9 @@ public class PreviewOverviewController {
 	
 	@FXML
 	private TextArea errorArea;
+	
+	@FXML
+	private TextField statusField;
 	
 	// reference to the main application
 	private MainApp mainApp;
@@ -39,6 +43,7 @@ public class PreviewOverviewController {
 	private void initialize() {
 		this.previewArea.setText("THIS IS THE OUTPUT");
 		this.errorArea.setText("THIS IS AN ERROR");
+		this.statusField.setText("THIS IS THE STATUS");
 	}
 	
 	/**

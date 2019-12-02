@@ -32,6 +32,12 @@
                         <Button mnemonicParsing="false" onAction="#loadFile" prefWidth="180.0" text="Load" />
                         <Button mnemonicParsing="false" onAction="#saveFile" prefWidth="180.0" text="Save" />
                         <Button mnemonicParsing="false" prefWidth="180.0" text="Preview" />
+                        <Label alignment="CENTER" prefWidth="180.0" text="Status">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="statusField" />
                         <AnchorPane prefHeight="404.0" prefWidth="180.0">
                            <children>
                               <Button mnemonicParsing="false" onAction="#exitApplication" prefWidth="180.0" text="Exit" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />

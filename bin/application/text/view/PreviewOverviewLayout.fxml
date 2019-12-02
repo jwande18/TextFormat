@@ -34,7 +34,7 @@
                         <Button mnemonicParsing="false" prefWidth="180.0" text="Preview" />
                         <AnchorPane prefHeight="404.0" prefWidth="180.0">
                            <children>
-                              <Button mnemonicParsing="false" prefWidth="180.0" text="Button" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                              <Button mnemonicParsing="false" prefWidth="180.0" text="Exit" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </children>

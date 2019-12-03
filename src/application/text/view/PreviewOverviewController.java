@@ -5,14 +5,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.stage.*;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
 import application.text.MainApp;
 import application.text.process.Processing;
@@ -39,7 +40,7 @@ public class PreviewOverviewController {
 	private boolean _s; // single spaced
 	private boolean _i; // paragraph indentation (5 spaces)
 	private boolean _b; // block indentation (10 spaces)
-	private boolean _1; // single column (80 chararacters)
+	private boolean _1; // single column (80 characters)
 	private boolean _2; // double column (35, 10, 35 characters)
 	private boolean _e; // blank line insertion
 	private boolean _n; // no paragraph indentation
@@ -174,18 +175,51 @@ public class PreviewOverviewController {
 	/**
 	 * processFile processes the file 'inputFile' for the appropriate
 	 * formatting.
+	 * @throws IOException 
 	 */
-	public void processFile() {
+	public void processFile() throws IOException {
 		// reset the preview area
 		previewArea.setText("");
+		int currLineLength = 0;
 		
 		try {
 			if(inputFile != null) {
-				Scanner scan = new Scanner(inputFile);
-			
-				while(scan.hasNext()) {
-					String readLine = scan.nextLine();
-					previewArea.setText(previewArea.getText() + readLine + "\n");
+				FileReader reader = new FileReader(inputFile.toString());
+				String word;
+				int character;
+				
+				while((character = reader.read()) != -1) {
+					word = "";
+					
+					while(character != 32 && character != -1) {
+						// building a single word
+						word = word + (char) character;
+						
+						// read next character
+						character = reader.read();
+						++currLineLength;
+					}
+					
+					if(currLineLength < 80) {
+						if(character != -1) {
+							previewArea.setText(previewArea.getText() + word + (char) character);
+						}
+						
+					//	if(character == 10) {
+						//	currLineLength = 0;
+						//}
+						//else {
+							//++currLineLength;
+						//}
+					}
+					else {
+						// over the line character limit
+						if(character != -1) {
+							previewArea.setText(previewArea.getText() + "\n" + word + (char) character);
+						}
+						
+						currLineLength = 0;
+					};
 				}
 				
 				statusArea.setText(statusArea.getText() + currentTime() + "File processed.\n");

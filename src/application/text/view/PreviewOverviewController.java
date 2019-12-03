@@ -191,26 +191,31 @@ public class PreviewOverviewController {
 				while((character = reader.read()) != -1) {
 					word = "";
 					
-					while(character != 32 && character != -1) {
+					while(character != 32 && character != 13 && character != -1) {
 						// building a single word
 						word = word + (char) character;
 						
+						if(character == 13) {
+							currLineLength = 0;
+						}
 						// read next character
 						character = reader.read();
 						++currLineLength;
 					}
+					
+					// process flags [here]
 					
 					if(currLineLength < 80) {
 						if(character != -1) {
 							previewArea.setText(previewArea.getText() + word + (char) character);
 						}
 						
-					//	if(character == 10) {
-						//	currLineLength = 0;
-						//}
-						//else {
-							//++currLineLength;
-						//}
+						if(character == 13) {
+							currLineLength = 0;
+						}
+						else {
+							++currLineLength;
+						}
 					}
 					else {
 						// over the line character limit

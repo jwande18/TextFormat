@@ -180,8 +180,6 @@ public class PreviewOverviewController {
 	public void processFile() throws IOException {
 		// reset the preview area
 		previewArea.setText("");
-		int characterCount = 0;
-		int lineLength = 0;
 		
 		try {
 			if(inputFile != null) {
@@ -191,7 +189,6 @@ public class PreviewOverviewController {
 				
 				while((character = reader.read()) != -1) {
 					word = "";
-					++characterCount;
 					
 					// read flag(s)
 					while(character == 45) {						
@@ -211,30 +208,24 @@ public class PreviewOverviewController {
 						character = reader.read();
 					}
 					
-					while(character != 32 && character != 13 && character != -1) {
+					while(character != 32 && character != 13 && character != 10 && character != -1) {
 						// building a single word
 						word = word + (char) character;
 						
-						if(character == 13) {
-							characterCount = 0;
-						}
-						else if(character == 45) {
+						if(character == 45) {
 							break;
 						}
 						
 						// read next character
 						character = reader.read();
-						++characterCount;
 					}
-					
-					System.out.println("Word: " + word);
 					
 					if(line.length() + word.length() < 80) {						
 						if(character == 13 || character == 10 || character == -1) {
-							System.out.println("detected end of line");
-							previewArea.setText(previewArea.getText() + setLineProperties(line) + "[" + characterCount + "]");
-							characterCount = 0;
-							line = "";
+							if(!line.equals("")) {
+								previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n"); 
+								line = "";
+							}
 						}
 						else {
 							if(character != -1) {
@@ -245,11 +236,12 @@ public class PreviewOverviewController {
 					else {
 						// over the line character limit
 						if(character != -1) {
-							previewArea.setText(previewArea.getText() + setLineProperties(line) + "[[" + characterCount + "]]" + "\n");
+							previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n");
 							
 							line = "";
-							line = line + word + (char) character;
-							characterCount = 0;
+							if(character != -1) {
+								line = line + word + (char) character;
+							}
 						}
 					}
 				}
@@ -371,12 +363,9 @@ public class PreviewOverviewController {
 		}
 	}
 	
-	public String setLineProperties(String line) {
-		StringBuilder str = new StringBuilder(line);
-		
+	public String setLineProperties(String line) {		
 		// set properties
 		if(_r) {
-			System.out.println("R DETECTED");
 			int count = 0;
 			int spaces = 80 - line.length();
 			
@@ -384,8 +373,6 @@ public class PreviewOverviewController {
 				line = " " + line;
 				++count;
 			}
-			
-			System.out.println("Spaces: " + spaces);
 		}
 		
 		if(_c) {

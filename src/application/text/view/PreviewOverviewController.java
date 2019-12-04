@@ -186,6 +186,7 @@ public class PreviewOverviewController {
 				FileReader reader = new FileReader(inputFile.toString());
 				String word, line = "";
 				int character, flag;
+				boolean setPropertiesBefore = false;
 				
 				while((character = reader.read()) != -1) {
 					word = "";
@@ -208,6 +209,12 @@ public class PreviewOverviewController {
 						character = reader.read();
 					}
 					
+					if(!setPropertiesBefore) {
+						// set line properties before any words are added
+						line = setLinePropertiesBefore(line);
+						setPropertiesBefore = true;
+					}
+					
 					while(character != 32 && character != 13 && character != 10 && character != -1) {
 						// building a single word
 						word = word + (char) character;
@@ -220,11 +227,12 @@ public class PreviewOverviewController {
 						character = reader.read();
 					}
 					
-					if(line.length() + word.length() < 80) {						
+					if(line.length() + word.length() < 80) {				
 						if(character == 13 || character == 10 || character == -1) {
 							if(!line.equals("")) {
 								previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n"); 
 								line = "";
+								setPropertiesBefore = false;
 							}
 						}
 						else {
@@ -237,8 +245,8 @@ public class PreviewOverviewController {
 						// over the line character limit
 						if(character != -1) {
 							previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n");
-							
 							line = "";
+							setPropertiesBefore = false;
 							if(character != -1) {
 								line = line + word + (char) character;
 							}
@@ -318,14 +326,29 @@ public class PreviewOverviewController {
 		break;
 		case (int) 'c': {
 			_c = true;
+			
+			// disable other justifications
+			_r = false;
+			_l = false;
+			_t = false;
 		}
 		break;
 		case (int) 'l': {
 			_l = true;
+			
+			// disable other justifications
+			_r = false;
+			_c = false;
+			_t = false;
 		}
 		break;
 		case (int) 't': {
 			_t = true;
+			
+			// disable other justifications
+			_r = false;
+			_c = false;
+			_l = false;
 		}
 		break;
 		case (int) 'd': {
@@ -361,6 +384,14 @@ public class PreviewOverviewController {
 		}
 		break;
 		}
+	}
+	
+	public String setLinePropertiesBefore(String line) {
+		if(_b) {
+			line = "          " + line;
+		}
+		
+		return line;
 	}
 	
 	public String setLineProperties(String line) {		
@@ -400,10 +431,6 @@ public class PreviewOverviewController {
 			_i = false;
 		}
 		
-		if(_b) {
-			
-		}
-		
 		if(_1) {
 			
 		}
@@ -413,7 +440,7 @@ public class PreviewOverviewController {
 		}
 		
 		if(_e) {
-			
+			previewArea.setText(previewArea.getText() + "\n");
 		}
 		
 		if(_n) {

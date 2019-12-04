@@ -180,7 +180,8 @@ public class PreviewOverviewController {
 	public void processFile() throws IOException {
 		// reset the preview area
 		previewArea.setText("");
-		int currLineLength = 0;
+		int characterCount = 0;
+		int lineLength = 0;
 		
 		try {
 			if(inputFile != null) {
@@ -215,26 +216,26 @@ public class PreviewOverviewController {
 						word = word + (char) character;
 						
 						if(character == 13) {
-							currLineLength = 0;
+							characterCount = 0;
 						}
 						else if(character == 45) {
 							break;
 						}
 						// read next character
 						character = reader.read();
-						++currLineLength;
+						++characterCount;
 					}
 					
-					if(currLineLength < 80) {
+					if(characterCount < 80) {
 						if(character != -1) {
 							previewArea.setText(previewArea.getText() + word + (char) character);
 						}
 						
 						if(character == 13) {
-							currLineLength = 0;
+							characterCount = 0;
 						}
 						else {
-							++currLineLength;
+							++characterCount;
 						}
 					}
 					else {
@@ -243,7 +244,7 @@ public class PreviewOverviewController {
 							previewArea.setText(previewArea.getText() + "\n" + word + (char) character);
 						}
 						
-						currLineLength = 0;
+						characterCount = 0;
 					};
 				}
 				

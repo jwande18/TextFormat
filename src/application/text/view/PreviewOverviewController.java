@@ -186,10 +186,42 @@ public class PreviewOverviewController {
 			if(inputFile != null) {
 				FileReader reader = new FileReader(inputFile.toString());
 				String word;
-				int character;
+				int character, flag;
 				
 				while((character = reader.read()) != -1) {
 					word = "";
+					System.out.println((char) character);
+					
+					// read flag(s)
+					while(character == 45) {						
+						// get flag value
+						flag = reader.read();
+						System.out.println("Flag: " + (char) flag);
+					
+						switch(flag) {
+						// set flag properties
+						case 105: {
+							_i = true;
+						}
+						break;
+						}
+						
+						// read to end of flag line
+						while((character = reader.read()) != 10) {
+							;
+						}
+						
+						// read next character
+						character = reader.read();
+						
+						System.out.println("FLAG LOOP");
+					}
+					
+					// set properties
+					if(_i) {
+						previewArea.setText(previewArea.getText() + "     ");
+						_i = false;
+					}
 					
 					while(character != 32 && character != 13 && character != -1) {
 						// building a single word
@@ -198,12 +230,13 @@ public class PreviewOverviewController {
 						if(character == 13) {
 							currLineLength = 0;
 						}
+						else if(character == 45) {
+							break;
+						}
 						// read next character
 						character = reader.read();
 						++currLineLength;
 					}
-					
-					// process flags [here]
 					
 					if(currLineLength < 80) {
 						if(character != -1) {

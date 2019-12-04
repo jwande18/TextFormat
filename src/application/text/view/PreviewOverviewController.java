@@ -209,8 +209,6 @@ public class PreviewOverviewController {
 						character = reader.read();
 					}
 					
-					setTextProperties();
-					
 					while(character != 32 && character != 13 && character != -1) {
 						// building a single word
 						word = word + (char) character;
@@ -233,7 +231,7 @@ public class PreviewOverviewController {
 						}
 						
 						if(character == 13) {
-							previewArea.setText(previewArea.getText() + line);
+							previewArea.setText(previewArea.getText() + setLineProperties(line));
 							characterCount = 0;
 							line = "";
 						}
@@ -244,7 +242,7 @@ public class PreviewOverviewController {
 					else {
 						// over the line character limit
 						if(character != -1) {
-							previewArea.setText(previewArea.getText() + line);
+							previewArea.setText(previewArea.getText() + setLineProperties(line));
 							
 							line = "";
 							line = line + "\n" + word + (char) character;
@@ -370,7 +368,7 @@ public class PreviewOverviewController {
 		}
 	}
 	
-	public void setTextProperties() {
+	public String setLineProperties(String line) {
 		// set properties
 		if(_r) {
 			
@@ -397,7 +395,7 @@ public class PreviewOverviewController {
 		}
 		
 		if(_i) {
-			previewArea.setText(previewArea.getText() + "     ");
+			line = "     " + line;
 			_i = false;
 		}
 		
@@ -420,5 +418,7 @@ public class PreviewOverviewController {
 		if(_n) {
 			
 		}
+		
+		return line;
 	}
 }

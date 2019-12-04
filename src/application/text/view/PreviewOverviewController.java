@@ -227,8 +227,6 @@ public class PreviewOverviewController {
 						character = reader.read();
 					}
 					
-					System.out.println("Word: " + word);
-					
 					if(line.length() + word.length() < 80) {				
 						if(character != -1 && character != 13 && character != 10) {
 							line = line + word + (char) character;

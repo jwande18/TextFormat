@@ -227,19 +227,23 @@ public class PreviewOverviewController {
 						character = reader.read();
 					}
 					
+					System.out.println("Word: " + word);
+					
 					if(line.length() + word.length() < 80) {				
+						if(character != -1 && character != 13 && character != 10) {
+							line = line + word + (char) character;
+						}
+						else {
+							line = line + word;
+						}
+						
 						if(character == 13 || character == 10 || character == -1) {
 							if(!line.equals("")) {
 								previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n"); 
 								line = "";
 								setPropertiesBefore = false;
 							}
-						}
-						else {
-							if(character != -1) {
-								line = line + word + (char) character;
-							}
-						}
+						}						
 					}
 					else {
 						// over the line character limit
@@ -247,8 +251,12 @@ public class PreviewOverviewController {
 							previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n");
 							line = "";
 							setPropertiesBefore = false;
+							
 							if(character != -1) {
 								line = line + word + (char) character;
+							}
+							else {
+								line = line + word;
 							}
 						}
 					}
@@ -409,7 +417,14 @@ public class PreviewOverviewController {
 		}
 		
 		if(_c) {
+			int count = 0;
+			int spaces = 80 - line.length();
+			int spaceDiv = spaces / 2;
 			
+			while(count < spaceDiv) {
+				line = " " + line;
+				++count;
+			}
 		}
 		
 		if(_l) {

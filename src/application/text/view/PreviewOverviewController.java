@@ -186,7 +186,7 @@ public class PreviewOverviewController {
 		try {
 			if(inputFile != null) {
 				FileReader reader = new FileReader(inputFile.toString());
-				String word;
+				String word, line = "";
 				int character, flag;
 				
 				while((character = reader.read()) != -1) {
@@ -221,6 +221,7 @@ public class PreviewOverviewController {
 						else if(character == 45) {
 							break;
 						}
+						
 						// read next character
 						character = reader.read();
 						++characterCount;
@@ -228,11 +229,13 @@ public class PreviewOverviewController {
 					
 					if(characterCount < 80) {
 						if(character != -1) {
-							previewArea.setText(previewArea.getText() + word + (char) character);
+							line = line + word + (char) character;
 						}
 						
 						if(character == 13) {
+							previewArea.setText(previewArea.getText() + line);
 							characterCount = 0;
+							line = "";
 						}
 						else {
 							++characterCount;
@@ -241,7 +244,10 @@ public class PreviewOverviewController {
 					else {
 						// over the line character limit
 						if(character != -1) {
-							previewArea.setText(previewArea.getText() + "\n" + word + (char) character);
+							previewArea.setText(previewArea.getText() + line);
+							
+							line = "";
+							line = line + "\n" + word + (char) character;
 						}
 						
 						characterCount = 0;

@@ -78,7 +78,7 @@ public class PreviewOverviewController {
 	private void initialize() {
 		// set preview area properties
 		this.previewArea.setText("");
-		this.previewArea.setEditable(false);
+		//this.previewArea.setEditable(false);
 		
 		// set status area properties
 		this.statusArea.setText("");
@@ -191,12 +191,14 @@ public class PreviewOverviewController {
 				
 				while((character = reader.read()) != -1) {
 					word = "";
+					++characterCount;
 					
 					// read flag(s)
 					while(character == 45) {						
 						// get flag value
 						flag = reader.read();
 					
+						System.out.println("Flag: " + (char) flag);
 						// set the formatting properties
 						setFormatProperties(flag);
 						
@@ -225,33 +227,34 @@ public class PreviewOverviewController {
 						++characterCount;
 					}
 					
-					if(characterCount < 80) {
-						if(character != -1) {
-							line = line + word + (char) character;
-						}
-						
-						if(character == 13) {
-							previewArea.setText(previewArea.getText() + setLineProperties(line));
+					System.out.println("Word: " + word);
+					
+					if(line.length() + word.length() < 80) {						
+						if(character == 13 || character == 10 || character == -1) {
+							System.out.println("detected end of line");
+							previewArea.setText(previewArea.getText() + setLineProperties(line) + "[" + characterCount + "]");
 							characterCount = 0;
 							line = "";
 						}
 						else {
-							++characterCount;
+							if(character != -1) {
+								line = line + word + (char) character;
+							}
 						}
 					}
 					else {
 						// over the line character limit
 						if(character != -1) {
-							previewArea.setText(previewArea.getText() + setLineProperties(line));
+							previewArea.setText(previewArea.getText() + setLineProperties(line) + "[[" + characterCount + "]]" + "\n");
 							
 							line = "";
-							line = line + "\n" + word + (char) character;
+							line = line + word + (char) character;
+							characterCount = 0;
 						}
-						
-						characterCount = 0;
-					};
+					}
 				}
 				
+				reader.close();
 				statusArea.setText(statusArea.getText() + currentTime() + "File processed.\n");
 			}
 			else {
@@ -369,9 +372,20 @@ public class PreviewOverviewController {
 	}
 	
 	public String setLineProperties(String line) {
+		StringBuilder str = new StringBuilder(line);
+		
 		// set properties
 		if(_r) {
+			System.out.println("R DETECTED");
+			int count = 0;
+			int spaces = 80 - line.length();
 			
+			while(count < spaces) {
+				line = " " + line;
+				++count;
+			}
+			
+			System.out.println("Spaces: " + spaces);
 		}
 		
 		if(_c) {

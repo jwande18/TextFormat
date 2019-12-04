@@ -23,6 +23,8 @@ public class MainApp extends Application {
 		
 		// disable resize-ability
 		this.primaryStage.setResizable(false);
+		this.primaryStage.setWidth(800);
+		this.primaryStage.setHeight(480);
 		
 		initRootLayout();
 		showPreviewOverview();

@@ -190,21 +190,14 @@ public class PreviewOverviewController {
 				
 				while((character = reader.read()) != -1) {
 					word = "";
-					System.out.println((char) character);
 					
 					// read flag(s)
 					while(character == 45) {						
 						// get flag value
 						flag = reader.read();
-						System.out.println("Flag: " + (char) flag);
 					
-						switch(flag) {
-						// set flag properties
-						case 105: {
-							_i = true;
-						}
-						break;
-						}
+						// set the formatting properties
+						setFormatProperties(flag);
 						
 						// read to end of flag line
 						while((character = reader.read()) != 10) {
@@ -213,15 +206,9 @@ public class PreviewOverviewController {
 						
 						// read next character
 						character = reader.read();
-						
-						System.out.println("FLAG LOOP");
 					}
 					
-					// set properties
-					if(_i) {
-						previewArea.setText(previewArea.getText() + "     ");
-						_i = false;
-					}
+					setTextProperties();
 					
 					while(character != 32 && character != 13 && character != -1) {
 						// building a single word
@@ -312,5 +299,119 @@ public class PreviewOverviewController {
 	 */
 	public String formatErrorCount() {
 		return "(Error #" + errorCount + ") ";
+	}
+	
+	/**
+	 * setFormatProperties enables the respective flag based on its set properties
+	 * @param flag
+	 */
+	public void setFormatProperties(int flag) {
+		switch(flag) {
+		case (int) 'r': {
+			_r = true;
+			
+			// disable other justifications
+			_c = false;
+			_l = false;
+			_t = false;
+		}
+		break;
+		case (int) 'c': {
+			_c = true;
+		}
+		break;
+		case (int) 'l': {
+			_l = true;
+		}
+		break;
+		case (int) 't': {
+			_t = true;
+		}
+		break;
+		case (int) 'd': {
+			_d = true;
+		}
+		break;
+		case (int) 's': {
+			_s = true;
+		}
+		break;
+		case (int) 'i': {
+			_i = true;
+		}
+		break;
+		case (int) 'b': {
+			_b = true;
+		}
+		break;
+		case (int) '1': {
+			_1 = true;
+		}
+		break;
+		case (int) '2': {
+			_2 = true;
+		}
+		break;
+		case (int) 'e': {
+			_e = true;
+		}
+		break;
+		case (int) 'n': {
+			_n = true;
+		}
+		break;
+		}
+	}
+	
+	public void setTextProperties() {
+		// set properties
+		if(_r) {
+			
+		}
+		
+		if(_c) {
+			
+		}
+		
+		if(_l) {
+			
+		}
+		
+		if(_t) {
+			
+		}
+		
+		if(_d) {
+			
+		}
+		
+		if(_s) {
+			
+		}
+		
+		if(_i) {
+			previewArea.setText(previewArea.getText() + "     ");
+			_i = false;
+		}
+		
+		if(_b) {
+			
+		}
+		
+		if(_1) {
+			
+		}
+		
+		if(_2) {
+			
+		}
+		
+		if(_e) {
+			
+		}
+		
+		if(_n) {
+			
+		}
 	}
 }

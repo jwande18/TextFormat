@@ -39,7 +39,7 @@ public class PreviewOverviewController {
 	private boolean _d; // double spaced                         (works)
 	private boolean _s; // single spaced                         (works)
 	private boolean _i; // paragraph indentation (5 spaces)      (works)
-	private boolean _b; // block indentation (10 spaces)         (works partly)
+	private boolean _b; // block indentation (10 spaces)         (works)
 	private boolean _1; // single column (80 characters)         (works)
 	private boolean _2; // double column (35, 10, 35 characters) 
 	private boolean _e; // blank line insertion                  (works)

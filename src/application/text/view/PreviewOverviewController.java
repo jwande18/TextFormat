@@ -212,6 +212,7 @@ public class PreviewOverviewController {
 					if(!setPropertiesBefore) {
 						// set line properties before any words are added
 						line = setLinePropertiesBefore(line);
+						
 						setPropertiesBefore = true;
 					}
 					
@@ -359,10 +360,16 @@ public class PreviewOverviewController {
 		break;
 		case (int) 'd': {
 			_d = true;
+			
+			// disable other spacing
+			_s = false;
 		}
 		break;
 		case (int) 's': {
 			_s = true;
+			
+			// disable other spacing
+			_d = false;
 		}
 		break;
 		case (int) 'i': {
@@ -397,6 +404,10 @@ public class PreviewOverviewController {
 			line = "          " + line;
 		}
 		
+		if(_e) {
+			line = "\n" + line;
+		}
+		
 		return line;
 	}
 	
@@ -426,7 +437,7 @@ public class PreviewOverviewController {
 		}
 		
 		if(_l) {
-			
+			// default
 		}
 		
 		if(_t) {
@@ -434,11 +445,11 @@ public class PreviewOverviewController {
 		}
 		
 		if(_d) {
-			
+			line = "\n" + line;
 		}
 		
 		if(_s) {
-			
+			// default
 		}
 		
 		if(_i) {
@@ -447,19 +458,15 @@ public class PreviewOverviewController {
 		}
 		
 		if(_1) {
-			
+			// default
 		}
 		
 		if(_2) {
 			
 		}
 		
-		if(_e) {
-			previewArea.setText(previewArea.getText() + "\n");
-		}
-		
 		if(_n) {
-			
+			// default
 		}
 		
 		return line;

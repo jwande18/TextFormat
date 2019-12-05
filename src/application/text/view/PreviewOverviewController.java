@@ -445,7 +445,7 @@ public class PreviewOverviewController {
 		}
 		
 		if(_d) {
-			line = "\n" + line;
+			line = line + "\n";
 		}
 		
 		if(_s) {

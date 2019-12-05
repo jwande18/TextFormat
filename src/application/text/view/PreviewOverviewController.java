@@ -108,6 +108,9 @@ public class PreviewOverviewController {
 		
 		if(inputFile != null) {
 			statusArea.setText(statusArea.getText() + currentTime() + "File loaded.\n");
+			
+			resetFlags();
+			statusArea.setText(statusArea.getText() + currentTime() + "Properties set to default.\n");
 		}
 		else {
 			statusArea.setText(statusArea.getText() + currentTime() + "File not loaded.\n");
@@ -478,5 +481,21 @@ public class PreviewOverviewController {
 		}
 		
 		return line;
+	}
+	
+	public void resetFlags() {
+		// set the flag default(s)
+		_r = false;
+		_c = false;
+		_l = true;  // default
+		_t = false;
+		_d = false;
+		_s = true;  // default
+		_i = false;
+		_b = false;
+		_1 = true;  // default
+		_2 = false;
+		_e = false;
+		_n = true;  // default
 	}
 }

@@ -250,7 +250,9 @@ public class PreviewOverviewController {
 									line = line.substring(0, line.length() - 1);
 								}
 								
-								previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n"); 
+								if(!line.equals("         ")) {
+									previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n");
+								}
 								line = "";
 								setPropertiesBefore = false;
 							}

@@ -417,7 +417,7 @@ public class PreviewOverviewController {
 		}
 		
 		if(_e) {
-			line = "\n" + line;
+			previewArea.setText(previewArea.getText() + "\n");
 		}
 		
 		if(_i) {

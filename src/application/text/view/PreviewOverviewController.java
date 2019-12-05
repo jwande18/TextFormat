@@ -394,6 +394,8 @@ public class PreviewOverviewController {
 		return line;
 	}
 	
+	// new comment
+	
 	public String setLineProperties(String line) {		
 		// set properties
 		if(_r) {

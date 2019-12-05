@@ -1,5 +1,5 @@
 package application.text.view;
-//alan
+
 // import(s)
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;

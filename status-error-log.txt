@@ -1,2 +1,3 @@
-[17:52:33]: File loaded.
-[17:52:34]: File processed.
+[18:22:44]: File loaded.
+[18:22:44]: Properties set to default.
+[18:22:45]: File processed.

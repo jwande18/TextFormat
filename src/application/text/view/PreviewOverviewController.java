@@ -240,25 +240,31 @@ public class PreviewOverviewController {
 						}
 						
 						if(character == 13 || character == 10 || character == -1) {
-							if(!line.equals("")) {
-								if((int) line.charAt(line.length() - 1) == (int) ' ') {
-									line = line.substring(0, line.length() - 1);
-								}
-								
-								previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n"); 
-								line = "";
-								setPropertiesBefore = false;
+							if((int) line.charAt(line.length() - 1) == (int) ' ') {
+								line = line.substring(0, line.length() - 1);
 							}
+								
+							if(line.length() != 9 && _b) {
+								// ensure a blank line is not entered
+								previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n");
+							}
+							
+							line = "";
+							setPropertiesBefore = false;
 						}						
 					}
 					else {
 						// over the line character limit
 						if(character != -1) {
+							// remove whitespace at the end of the line
 							if((int) line.charAt(line.length() - 1) == (int) ' ') {
 								line = line.substring(0, line.length() - 1);
 							}
 							
-							previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n");
+							if(line.length() != 9 && _b) {
+								// ensure a blank line is not entered
+								previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n");
+							}
 							line = "";
 							setPropertiesBefore = false;
 							
@@ -419,6 +425,11 @@ public class PreviewOverviewController {
 			line = "\n" + line;
 		}
 		
+		if(_i) {
+			line = "     " + line;
+			_i = false;
+		}
+		
 		return line;
 	}
 	
@@ -461,11 +472,6 @@ public class PreviewOverviewController {
 		
 		if(_s) {
 			// default
-		}
-		
-		if(_i) {
-			line = "     " + line;
-			_i = false;
 		}
 		
 		if(_1) {

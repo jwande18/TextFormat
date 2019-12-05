@@ -238,6 +238,10 @@ public class PreviewOverviewController {
 						
 						if(character == 13 || character == 10 || character == -1) {
 							if(!line.equals("")) {
+								if((int) line.charAt(line.length() - 1) == (int) ' ') {
+									line = line.substring(0, line.length() - 1);
+								}
+								
 								previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n"); 
 								line = "";
 								setPropertiesBefore = false;
@@ -247,6 +251,10 @@ public class PreviewOverviewController {
 					else {
 						// over the line character limit
 						if(character != -1) {
+							if((int) line.charAt(line.length() - 1) == (int) ' ') {
+								line = line.substring(0, line.length() - 1);
+							}
+							
 							previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n");
 							line = "";
 							setPropertiesBefore = false;
@@ -445,7 +453,7 @@ public class PreviewOverviewController {
 		}
 		
 		if(_d) {
-			line = line + "\n";
+			line =  line + "\n";
 		}
 		
 		if(_s) {

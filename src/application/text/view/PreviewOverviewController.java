@@ -32,18 +32,20 @@ public class PreviewOverviewController {
 	File statusLog;
 	
 	// flags
-	private boolean _r; // right justified
-	private boolean _c; // center (left & right)
-	private boolean _l; // left justified
+	private boolean _r; // right justified                       (works)
+	private boolean _c; // center (left & right)                 (works)
+	private boolean _l; // left justified                        (works)
 	private boolean _t; // centered, no justification
-	private boolean _d; // double spaced
-	private boolean _s; // single spaced
-	private boolean _i; // paragraph indentation (5 spaces)
-	private boolean _b; // block indentation (10 spaces)
-	private boolean _1; // single column (80 characters)
-	private boolean _2; // double column (35, 10, 35 characters)
-	private boolean _e; // blank line insertion
-	private boolean _n; // no paragraph indentation
+	private boolean _d; // double spaced                         (works)
+	private boolean _s; // single spaced                         (works)
+	private boolean _i; // paragraph indentation (5 spaces)      (works)
+	private boolean _b; // block indentation (10 spaces)         (works partly)
+	private boolean _1; // single column (80 characters)         (works)
+	private boolean _2; // double column (35, 10, 35 characters) 
+	private boolean _e; // blank line insertion                  (works)
+	private boolean _n; // no paragraph indentation              (works)
+	
+	boolean newParagraph = true;
 	
 	// reference to the main application
 	private MainApp mainApp;
@@ -195,7 +197,9 @@ public class PreviewOverviewController {
 					word = "";
 					
 					// read flag(s)
-					while(character == 45) {						
+					while(character == 45) {
+						newParagraph = true;
+						
 						// get flag value
 						flag = reader.read();
 					
@@ -217,6 +221,7 @@ public class PreviewOverviewController {
 						line = setLinePropertiesBefore(line);
 						
 						setPropertiesBefore = true;
+						newParagraph = false;
 					}
 					
 					while(character != 32 && character != 13 && character != 10 && character != -1) {
@@ -386,10 +391,18 @@ public class PreviewOverviewController {
 		break;
 		case (int) 'i': {
 			_i = true;
+			
+			// disable non-indent
+			_b = false;
+			_n = false;
 		}
 		break;
 		case (int) 'b': {
 			_b = true;
+			
+			// disable other indentation
+			_i = false;
+			_n = false;
 		}
 		break;
 		case (int) '1': {
@@ -406,6 +419,10 @@ public class PreviewOverviewController {
 		break;
 		case (int) 'n': {
 			_n = true;
+			
+			// disable indent
+			_i = false;
+			_b = false;
 		}
 		break;
 		}
@@ -418,11 +435,13 @@ public class PreviewOverviewController {
 		
 		if(_e) {
 			previewArea.setText(previewArea.getText() + "\n");
+			_e = false;
 		}
 		
 		if(_i) {
-			line = "     " + line;
-			_i = false;
+			if(newParagraph) {
+				line = "     " + line;
+			}
 		}
 		
 		return line;

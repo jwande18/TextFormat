@@ -678,40 +678,48 @@ public class PreviewOverviewController {
 		}
 		
 		if(_t) {
-			int count = 80 -  line.length();
-			int space_count = 0;
-			int spaces_per_space = 0;
+			int spacesLeft = 80 -  line.length();
+			int spacesInLine = 0;
+			int spacesToAddPerSpace = 0;
 			int position = 0;
-			for(int i = 0;i<line.length();i++)
-			{
-				if((int)line.charAt(i) == (int) ' ')
-					space_count++;
-			}
-			if(space_count != 0)
-			{
-		    spaces_per_space = space_count/count;
-			}
-			System.out.println("spaces and line: " + space_count);
-			System.out.println("count:" + count);
-			int length = line.length();
-			while(position < length && count > 0)
-			{
-				System.out.println("count:" + count);
-				System.out.println("position:" + position);
-				if((int) line.charAt(position) == (int) ' ')
-				{
-					for(int insert_count = 1; insert_count<spaces_per_space;insert_count++)
-					{
-						line = line.substring(0, position) + " " + line.substring(position,line.length());
-						count--;
-						position++;
-						//System.out.println("second for loop");
-					}
-					line = line.substring(0, position) + " " + line.substring(position,line.length());
-				    count--;
-				    position++;
+			
+			// iterate through line and count spaces
+			for(int i = 0; i < line.length();++i) {
+				if((int) line.charAt(i) == (int) ' ') {
+					spacesInLine++;
 				}
-				position++;
+			}
+			
+			if(spacesInLine != 0 && line.length() < 80) {
+				spacesToAddPerSpace = spacesLeft / spacesInLine;
+				System.out.println("Spaces to Add: " + spacesToAddPerSpace);
+				System.out.println("Spaces Left: " + spacesLeft);
+				
+				++spacesToAddPerSpace;
+				
+				int lineLength = line.length();
+				
+				while(position < lineLength && spacesLeft > 0 && line.length() < 80) {
+					if((int) line.charAt(position) == (int) ' ') {
+						// add the appropriate number of spaces
+						for(int i = 0; i < spacesToAddPerSpace; ++i) {
+							line = line.substring(0, position) + " " + line.substring(position);
+							--spacesLeft;
+							++position;
+						}
+					}
+					
+					++position;
+				}
+			}
+			else {
+				// center the word
+				int spacesAdded = 0;
+				
+				while(spacesAdded < (spacesLeft / 2)) {
+					line = " " + line;
+					++spacesAdded;
+				}
 			}
 		}
 		

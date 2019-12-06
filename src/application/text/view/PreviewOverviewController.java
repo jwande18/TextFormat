@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -45,7 +46,11 @@ public class PreviewOverviewController {
 	private boolean _e; // blank line insertion                  (works)
 	private boolean _n; // no paragraph indentation              (works)
 	
-	boolean newParagraph = true;
+	private boolean newParagraph = true;
+	private int linesPerColumn = 0;
+	private int readerPosition = 0;
+	private int lineCount = 0;
+	private int currLine = 0;
 	
 	// reference to the main application
 	private MainApp mainApp;
@@ -188,12 +193,14 @@ public class PreviewOverviewController {
 		
 		try {
 			if(inputFile != null) {
-				FileReader reader = new FileReader(inputFile.toString());
+				RandomAccessFile reader = new RandomAccessFile(inputFile.toString(), "r");
 				String word, line = "";
 				int character, flag;
 				boolean setPropertiesBefore = false;
 				
 				while((character = reader.read()) != -1) {
+					++readerPosition;
+					
 					word = "";
 					
 					// read flag(s)
@@ -209,16 +216,17 @@ public class PreviewOverviewController {
 						
 						// read to end of flag line
 						while((character = reader.read()) != 10) {
-							;
+							++readerPosition;
 						}
 						
 						// read next character
 						character = reader.read();
+						++readerPosition;
 					}
 					
 					if(!setPropertiesBefore) {
 						// set line properties before any words are added
-						line = setLinePropertiesBefore(line);
+						line = setLinePropertiesBefore(line, reader);
 						
 						setPropertiesBefore = true;
 						newParagraph = false;
@@ -234,47 +242,167 @@ public class PreviewOverviewController {
 						
 						// read next character
 						character = reader.read();
+						++readerPosition;
 					}
 					
-					if(line.length() + word.length() < 80) {				
-						if(character != -1 && character != 13 && character != 10) {
-							line = line + word + (char) character;
-						}
-						else {
-							line = line + word;
-						}
-						
-						if(character == 13 || character == 10 || character == -1) {
-							if(!line.equals("")) {
-								if((int) line.charAt(line.length() - 1) == (int) ' ') {
-									line = line.substring(0, line.length() - 1);
-								}
-								
-								if(!line.equals("         ")) {
-									previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n");
-								}
-								line = "";
-								setPropertiesBefore = false;
-							}
-						}						
-					}
-					else {
-						// over the line character limit
-						if(character != -1) {
-							// remove whitespace at the end of the line
-							if((int) line.charAt(line.length() - 1) == (int) ' ') {
-								line = line.substring(0, line.length() - 1);
-							}
-							
-							previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n");
-							line = "";
-							setPropertiesBefore = false;
-							
-							if(character != -1) {
+					if(!_2) {
+						if(line.length() + word.length() < 80) {				
+							if(character != -1 && character != 13 && character != 10) {
 								line = line + word + (char) character;
 							}
 							else {
 								line = line + word;
+							}
+							
+							if(character == 13 || character == 10 || character == -1) {
+								if(!line.equals("")) {
+									if((int) line.charAt(line.length() - 1) == (int) ' ') {
+										line = line.substring(0, line.length() - 1);
+									}
+									
+									if(!line.equals("         ")) {
+										previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n");
+									}
+									line = "";
+									setPropertiesBefore = false;
+								}
+							}						
+						}
+						else {
+							// over the line character limit
+							if(character != -1) {
+								// remove whitespace at the end of the line
+								if((int) line.charAt(line.length() - 1) == (int) ' ') {
+									line = line.substring(0, line.length() - 1);
+								}
+								
+								previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n");
+								line = "";
+								setPropertiesBefore = false;
+								
+								if(character != -1) {
+									line = line + word + (char) character;
+								}
+								else {
+									line = line + word;
+								}
+							}
+						}
+					}
+					else {
+						// 2 column property enabled
+						if(lineCount <= linesPerColumn) {
+							System.out.println("Line Count: " + lineCount);
+							
+							// left column
+							if(line.length() + word.length() < 35) {				
+								if(character != -1 && character != 13 && character != 10) {
+									line = line + word + (char) character;
+								}
+								else {
+									line = line + word;
+								}
+								
+								if(character == 13 || character == 10 || character == -1) {
+									if(!line.equals("")) {
+										if((int) line.charAt(line.length() - 1) == (int) ' ') {
+											line = line.substring(0, line.length() - 1);
+										}
+										
+										// append space to equal 45 in length
+										while(line.length() < 45) {
+											line = line + " ";
+										}
+										
+										if(!line.equals("         ")) {
+											previewArea.setText(previewArea.getText() + setLineProperties(line) + "[" + lineCount + "]" + "\n");
+											
+											// increment line count
+											++lineCount;
+										}
+										line = "";
+										//setPropertiesBefore = false;
+									}
+								}						
+							}
+							else {
+								// over the line character limit
+								if(character != -1) {
+									// remove whitespace at the end of the line
+									if((int) line.charAt(line.length() - 1) == (int) ' ') {
+										line = line.substring(0, line.length() - 1);
+									}
+									
+									// append space to equal 45 in length
+									while(line.length() < 45) {
+										line = line + " ";
+									}
+									
+									previewArea.setText(previewArea.getText() + setLineProperties(line) + "[" + lineCount + "]" + "\n");
+									
+									// increment line count
+									++lineCount;
+									
+									line = "";
+									//setPropertiesBefore = false;
+									
+									if(character != -1) {
+										line = line + word + (char) character;
+									}
+									else {
+										line = line + word;
+									}
+								}
+							}
+						}
+						else {
+							// right column
+							if(line.length() + word.length() < 35) {				
+								if(character != -1 && character != 13 && character != 10) {
+									line = line + word + (char) character;
+								}
+								else {
+									line = line + word;
+								}
+								
+								if(character == 13 || character == 10 || character == -1) {
+									if(!line.equals("")) {
+										if((int) line.charAt(line.length() - 1) == (int) ' ') {
+											line = line.substring(0, line.length() - 1);
+										}
+										
+										if(!line.equals("         ")) {
+											previewArea.setText(previewArea.getText().substring(currLine * 45, currLine * 45 + 45) + setLineProperties(line) + "\n" +
+													previewArea.getText().substring(currLine * 45 + 45));
+											++currLine;
+										}
+										line = "";
+										//setPropertiesBefore = false;
+									}
+								}						
+							}
+							else {
+								// over the line character limit
+								if(character != -1) {
+									// remove whitespace at the end of the line
+									if((int) line.charAt(line.length() - 1) == (int) ' ') {
+										line = line.substring(0, line.length() - 1);
+									}
+									
+									previewArea.setText(previewArea.getText().substring(currLine * 45, currLine * 45 + 45) + setLineProperties(line) + "\n" +
+											previewArea.getText().substring(currLine * 45 + 45));
+									++currLine;
+									
+									line = "";
+									//setPropertiesBefore = false;
+									
+									if(character != -1) {
+										line = line + word + (char) character;
+									}
+									else {
+										line = line + word;
+									}
+								}
 							}
 						}
 					}
@@ -409,10 +537,23 @@ public class PreviewOverviewController {
 		break;
 		case (int) '1': {
 			_1 = true;
+			
+			// disable other column
+			_2 = false;
 		}
 		break;
 		case (int) '2': {
 			_2 = true;
+			
+			// disable other column
+			_1 = false;
+			
+			// disable special indentations
+			_i = false;
+			_b = false;
+			
+			// enable default(s)
+			_n = true;
 		}
 		break;
 		case (int) 'e': {
@@ -430,7 +571,7 @@ public class PreviewOverviewController {
 		}
 	}
 	
-	public String setLinePropertiesBefore(String line) {
+	public String setLinePropertiesBefore(String line, RandomAccessFile reader) {
 		if(_b) {
 			line = "          " + line;
 		}
@@ -444,6 +585,40 @@ public class PreviewOverviewController {
 			if(newParagraph) {
 				line = "     " + line;
 			}
+		}
+		
+		if(_1) {
+			// default
+		}
+		
+		if(_2) {	
+			int character, characterCount = 0;
+			
+			// count the number of characters
+			try {
+				while((character = reader.read()) != -1 && character != 45) {
+					++characterCount;
+				}
+			} catch (IOException exception) {
+				exception.printStackTrace();
+			}
+			
+			linesPerColumn = (characterCount / 35) / 2;
+			
+			// minimal one line per column
+			++linesPerColumn;
+			
+			System.out.println("Lines Per Column: " + linesPerColumn);
+			
+			// reset the reader to its last position
+			try {
+				reader.seek(readerPosition);
+				System.out.println("Reader Position: " + readerPosition);
+			} catch (IOException exception) {
+				exception.printStackTrace();
+			}
+			
+			System.out.println("Character Count: " + characterCount);
 		}
 		
 		return line;
@@ -522,14 +697,6 @@ public class PreviewOverviewController {
 		
 		if(_s) {
 			// default
-		}
-		
-		if(_1) {
-			// default
-		}
-		
-		if(_2) {
-			
 		}
 		
 		if(_n) {

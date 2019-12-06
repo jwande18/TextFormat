@@ -36,13 +36,13 @@ public class PreviewOverviewController {
 	private boolean _r; // right justified                       (works)
 	private boolean _c; // center (left & right)                 (works)
 	private boolean _l; // left justified                        (works)
-	private boolean _t; // centered, no justification
+	private boolean _t; // centered, no justification            (works)
 	private boolean _d; // double spaced                         (works)
 	private boolean _s; // single spaced                         (works)
 	private boolean _i; // paragraph indentation (5 spaces)      (works)
 	private boolean _b; // block indentation (10 spaces)         (works)
 	private boolean _1; // single column (80 characters)         (works)
-	private boolean _2; // double column (35, 10, 35 characters) 
+	private boolean _2; // double column (35, 10, 35 characters) (works)
 	private boolean _e; // blank line insertion                  (works)
 	private boolean _n; // no paragraph indentation              (works)
 	
@@ -484,21 +484,25 @@ public class PreviewOverviewController {
 	public void setFormatProperties(int flag) {
 		switch(flag) {
 		case (int) 'r': {
-			_r = true;
-			
-			// disable other justifications
-			_c = false;
-			_l = false;
-			_t = false;
+			if(!_2) {
+				_r = true;
+				
+				// disable other justifications
+				_c = false;
+				_l = false;
+				_t = false;
+			}
 		}
 		break;
 		case (int) 'c': {
-			_c = true;
-			
-			// disable other justifications
-			_r = false;
-			_l = false;
-			_t = false;
+			if(!_2) {
+				_c = true;
+				
+				// disable other justifications
+				_r = false;
+				_l = false;
+				_t = false;
+			}
 		}
 		break;
 		case (int) 'l': {
@@ -511,19 +515,23 @@ public class PreviewOverviewController {
 		}
 		break;
 		case (int) 't': {
-			_t = true;
-			
-			// disable other justifications
-			_r = false;
-			_c = false;
-			_l = false;
+			if(!_2) {
+				_t = true;
+				
+				// disable other justifications
+				_r = false;
+				_c = false;
+				_l = false;
+			}
 		}
 		break;
 		case (int) 'd': {
-			_d = true;
-			
-			// disable other spacing
-			_s = false;
+			if(!_2) {
+				_d = true;
+				
+				// disable other spacing
+				_s = false;
+			}
 		}
 		break;
 		case (int) 's': {
@@ -536,27 +544,21 @@ public class PreviewOverviewController {
 		case (int) 'i': {
 			if(!_2) {
 				_i = true;
+				
+				// disable non-indent
+				_b = false;
+				_n = false;
 			}
-			else {
-				_i = false;
-			}
-			
-			// disable non-indent
-			_b = false;
-			_n = false;
 		}
 		break;
 		case (int) 'b': {
 			if(!_2) {
 				_b = true;
+				
+				// disable other indentation
+				_i = false;
+				_n = false;
 			}
-			else {
-				_b = false;
-			}
-			
-			// disable other indentation
-			_i = false;
-			_n = false;
 		}
 		break;
 		case (int) '1': {
@@ -576,6 +578,7 @@ public class PreviewOverviewController {
 			_i = false;
 			_b = false;
 			_t = false;
+			_d = false;
 			
 			// enable default(s)
 			_n = true;

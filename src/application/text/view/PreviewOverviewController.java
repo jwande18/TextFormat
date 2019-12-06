@@ -596,6 +596,13 @@ public class PreviewOverviewController {
 		}
 	}
 	
+	/**
+	 * setLinePropertiesBefore sets the properties of the text that are required before
+	 * any text is added. This includes indentations, newlines, and columns.
+	 * @param line
+	 * @param reader
+	 * @return
+	 */
 	public String setLinePropertiesBefore(String line, RandomAccessFile reader) {
 		if(_b) {
 			line = "          " + line;
@@ -647,9 +654,13 @@ public class PreviewOverviewController {
 		
 		return line;
 	}
-	
-	// new comment
-	
+
+	/**
+	 * setLineProperties sets the properties of the text depending on the flags
+	 * supplied by the user.
+	 * @param line
+	 * @return
+	 */
 	public String setLineProperties(String line) {		
 		// set properties
 		if(_r) {
@@ -738,6 +749,10 @@ public class PreviewOverviewController {
 		return line;
 	}
 	
+	/**
+	 * resetFlags resets all text properties to their
+	 * default format settings.
+	 */
 	public void resetFlags() {
 		// set the flag default(s)
 		_r = false;

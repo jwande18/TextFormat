@@ -211,7 +211,6 @@ public class PreviewOverviewController {
 						// get flag value
 						flag = reader.read();
 					
-						System.out.println("Flag: " + (char) flag);
 						// set the formatting properties
 						setFormatProperties(flag);
 						
@@ -292,7 +291,7 @@ public class PreviewOverviewController {
 					}
 					else {
 						// 2 column property enabled
-						if(lineCount < linesPerColumn) {							
+						if(lineCount <= linesPerColumn) {							
 							// left column
 							if(line.length() + word.length() < 35) {				
 								if(character != -1 && character != 13 && character != 10) {
@@ -639,9 +638,7 @@ public class PreviewOverviewController {
 			linesPerColumn = (characterCount / 35) / 2;
 			
 			// minimal one line per column
-			++linesPerColumn;
-			
-			System.out.println("Lines Per Column: " + linesPerColumn);
+			linesPerColumn += 2;
 			
 			// reset the reader to its last position
 			try {
@@ -649,8 +646,6 @@ public class PreviewOverviewController {
 			} catch (IOException exception) {
 				exception.printStackTrace();
 			}
-			
-			System.out.println("Character Count: " + characterCount);
 		}
 		
 		return line;

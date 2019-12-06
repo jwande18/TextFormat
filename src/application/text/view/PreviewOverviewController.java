@@ -699,14 +699,10 @@ public class PreviewOverviewController {
 			
 			if(spacesInLine != 0 && line.length() < 80) {
 				spacesToAddPerSpace = spacesLeft / spacesInLine;
-				System.out.println("Spaces to Add: " + spacesToAddPerSpace);
-				System.out.println("Spaces Left: " + spacesLeft);
 				
 				++spacesToAddPerSpace;
 				
-				int lineLength = line.length();
-				
-				while(position < lineLength && spacesLeft > 0 && line.length() < 80) {
+				while(spacesLeft > 0 && line.length() < 80) {
 					if((int) line.charAt(position) == (int) ' ') {
 						// add the appropriate number of spaces
 						for(int i = 0; i < spacesToAddPerSpace; ++i) {

@@ -291,7 +291,7 @@ public class PreviewOverviewController {
 					}
 					else {
 						// 2 column property enabled
-						if(lineCount <= linesPerColumn) {
+						if(lineCount < linesPerColumn) {
 							System.out.println("Line Count: " + lineCount);
 							
 							// left column
@@ -310,12 +310,12 @@ public class PreviewOverviewController {
 										}
 										
 										// append space to equal 45 in length
-										while(line.length() < 45) {
+										while(line.length() < 45) {											
 											line = line + " ";
 										}
 										
 										if(!line.equals("         ")) {
-											previewArea.setText(previewArea.getText() + setLineProperties(line) + "[" + lineCount + "]" + "\n");
+											previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n");
 											
 											// increment line count
 											++lineCount;
@@ -338,7 +338,7 @@ public class PreviewOverviewController {
 										line = line + " ";
 									}
 									
-									previewArea.setText(previewArea.getText() + setLineProperties(line) + "[" + lineCount + "]" + "\n");
+									previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n");
 									
 									// increment line count
 									++lineCount;
@@ -357,50 +357,62 @@ public class PreviewOverviewController {
 						}
 						else {
 							// right column
-							if(line.length() + word.length() < 35) {				
-								if(character != -1 && character != 13 && character != 10) {
-									line = line + word + (char) character;
-								}
-								else {
-									line = line + word;
-								}
-								
-								if(character == 13 || character == 10 || character == -1) {
-									if(!line.equals("")) {
-										if((int) line.charAt(line.length() - 1) == (int) ' ') {
-											line = line.substring(0, line.length() - 1);
-										}
-										
-										if(!line.equals("         ")) {
-											previewArea.setText(previewArea.getText().substring(currLine * 45, currLine * 45 + 45) + setLineProperties(line) + "\n" +
-													previewArea.getText().substring(currLine * 45 + 45));
-											++currLine;
-										}
-										line = "";
-										//setPropertiesBefore = false;
-									}
-								}						
-							}
-							else {
-								// over the line character limit
-								if(character != -1) {
-									// remove whitespace at the end of the line
-									if((int) line.charAt(line.length() - 1) == (int) ' ') {
-										line = line.substring(0, line.length() - 1);
-									}
-									
-									previewArea.setText(previewArea.getText().substring(currLine * 45, currLine * 45 + 45) + setLineProperties(line) + "\n" +
-											previewArea.getText().substring(currLine * 45 + 45));
-									++currLine;
-									
-									line = "";
-									//setPropertiesBefore = false;
-									
-									if(character != -1) {
+							if(currLine < linesPerColumn) {
+								if(line.length() + word.length() < 35) {				
+									if(character != -1 && character != 13 && character != 10) {
 										line = line + word + (char) character;
 									}
 									else {
 										line = line + word;
+									}
+									
+									if(character == 13 || character == 10 || character == -1) {
+										if(!line.equals("")) {
+											if((int) line.charAt(line.length() - 1) == (int) ' ') {
+												line = line.substring(0, line.length() - 1);
+											}
+											
+											// append space to equal 35 in length
+											while(line.length() < 35) {
+												line = line + " ";
+											}
+											
+											if(!line.equals("         ")) {
+												previewArea.setText(previewArea.getText().substring(0, currLine * 80 + 45 + currLine) + setLineProperties(line) +
+														previewArea.getText().substring(currLine * 80 + 45 + currLine));
+												++currLine;
+											}
+											line = "";
+											//setPropertiesBefore = false;
+										}
+									}						
+								}
+								else {
+									// over the line character limit
+									if(character != -1) {
+										// remove whitespace at the end of the line
+										if((int) line.charAt(line.length() - 1) == (int) ' ') {
+											line = line.substring(0, line.length() - 1);
+										}
+										
+										// append space to equal 35 in length
+										while(line.length() < 35) {
+											line = line + " ";
+										}
+										
+										previewArea.setText(previewArea.getText().substring(0, currLine * 80 + 45 + currLine) + setLineProperties(line) +
+												previewArea.getText().substring(currLine * 80 + 45 + currLine));
+										++currLine;
+										
+										line = "";
+										//setPropertiesBefore = false;
+										
+										if(character != -1) {
+											line = line + word + (char) character;
+										}
+										else {
+											line = line + word;
+										}
 									}
 								}
 							}
@@ -409,6 +421,7 @@ public class PreviewOverviewController {
 				}
 				
 				reader.close();
+				//previewArea.setText(previewArea.getText().substring(0, 45 * 2 + 45) + "This is the right column" + previewArea.getText().substring(45 * 2 + 45));
 				statusArea.setText(statusArea.getText() + currentTime() + "File processed.\n");
 			}
 			else {

@@ -576,6 +576,7 @@ public class PreviewOverviewController {
 			// disable special indentations
 			_i = false;
 			_b = false;
+			_t = false;
 			
 			// enable default(s)
 			_n = true;

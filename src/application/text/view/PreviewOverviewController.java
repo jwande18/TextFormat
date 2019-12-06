@@ -47,6 +47,7 @@ public class PreviewOverviewController {
 	private boolean _n; // no paragraph indentation              (works)
 	
 	private boolean newParagraph = true;
+	private boolean firstRead = true;
 	private int linesPerColumn = 0;
 	private int readerPosition = 0;
 	private int lineCount = 0;
@@ -291,9 +292,7 @@ public class PreviewOverviewController {
 					}
 					else {
 						// 2 column property enabled
-						if(lineCount < linesPerColumn) {
-							System.out.println("Line Count: " + lineCount);
-							
+						if(lineCount < linesPerColumn) {							
 							// left column
 							if(line.length() + word.length() < 35) {				
 								if(character != -1 && character != 13 && character != 10) {
@@ -315,10 +314,14 @@ public class PreviewOverviewController {
 										}
 										
 										if(!line.equals("         ")) {
-											previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n");
+											if(!firstRead) {
+												previewArea.setText(previewArea.getText() + setLineProperties(line) + "\n");
 											
-											// increment line count
-											++lineCount;
+												// increment line count
+												++lineCount;
+												
+												firstRead = false;
+											}
 										}
 										line = "";
 										//setPropertiesBefore = false;
@@ -421,7 +424,6 @@ public class PreviewOverviewController {
 				}
 				
 				reader.close();
-				//previewArea.setText(previewArea.getText().substring(0, 45 * 2 + 45) + "This is the right column" + previewArea.getText().substring(45 * 2 + 45));
 				statusArea.setText(statusArea.getText() + currentTime() + "File processed.\n");
 			}
 			else {
@@ -533,7 +535,12 @@ public class PreviewOverviewController {
 		}
 		break;
 		case (int) 'i': {
-			_i = true;
+			if(!_2) {
+				_i = true;
+			}
+			else {
+				_i = false;
+			}
 			
 			// disable non-indent
 			_b = false;
@@ -541,7 +548,12 @@ public class PreviewOverviewController {
 		}
 		break;
 		case (int) 'b': {
-			_b = true;
+			if(!_2) {
+				_b = true;
+			}
+			else {
+				_b = false;
+			}
 			
 			// disable other indentation
 			_i = false;
@@ -626,7 +638,6 @@ public class PreviewOverviewController {
 			// reset the reader to its last position
 			try {
 				reader.seek(readerPosition);
-				System.out.println("Reader Position: " + readerPosition);
 			} catch (IOException exception) {
 				exception.printStackTrace();
 			}

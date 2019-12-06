@@ -553,7 +553,7 @@ public class PreviewOverviewController {
 			if(!_2) {
 				_b = true;
 				
-				// disable other indentation
+				// disable other(s)
 				_i = false;
 				_n = false;
 			}
@@ -567,16 +567,19 @@ public class PreviewOverviewController {
 		}
 		break;
 		case (int) '2': {
-			_2 = true;
-			
-			// disable other column
-			_1 = false;
-			
-			// disable special indentations
-			_i = false;
-			_b = false;
+			// set the flag value(s)
+			_r = false;
+			_c = false;
+			_l = true;  // default
 			_t = false;
 			_d = false;
+			_s = true;  // default
+			_i = false;
+			_b = false;
+			_1 = false;  // default
+			_2 = true;
+			_e = false;
+			_n = true;  // default
 			
 			// enable default(s)
 			_n = true;
@@ -673,6 +676,7 @@ public class PreviewOverviewController {
 		if(_t) {
 			int count = 0;
 			int spaces = 80 - line.length();
+
 			int spaceDiv = spaces / 2;
 			
 			while(count < spaceDiv) {

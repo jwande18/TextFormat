@@ -1,0 +1,33 @@
+-r
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+-t
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+-c
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+-b
+-l
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code
+Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code Visual Studio Code

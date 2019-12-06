@@ -669,7 +669,7 @@ public class PreviewOverviewController {
 			}
 		}
 		
-		if(_c) {
+		if(_t) {
 			int count = 0;
 			int spaces = 80 - line.length();
 			int spaceDiv = spaces / 2;
@@ -684,14 +684,14 @@ public class PreviewOverviewController {
 			// default
 		}
 		
-		if(_t) {
+		if(_c) {
 			int spacesLeft = 80 -  line.length();
 			int spacesInLine = 0;
 			int spacesToAddPerSpace = 0;
 			int position = 0;
 			
 			// iterate through line and count spaces
-			for(int i = 0; i < line.length();++i) {
+			for(int i = 0; i < line.length(); ++i) {
 				if((int) line.charAt(i) == (int) ' ') {
 					spacesInLine++;
 				}
